@@ -19,7 +19,6 @@
  */
 package com.github.gwtmaterialdesign.client.application;
 
-import com.github.gwtmaterialdesign.client.events.ConnectionStatusUpdatedEvent;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.Presenter;
@@ -29,12 +28,10 @@ import com.gwtplatform.mvp.client.presenter.slots.NestedSlot;
 import com.gwtplatform.mvp.client.proxy.Proxy;
 
 public class ApplicationPresenter
-        extends Presenter<ApplicationPresenter.MyView, ApplicationPresenter.MyProxy> implements ConnectionStatusUpdatedEvent.ConnectionStatusUpdatedHandler {
+        extends Presenter<ApplicationPresenter.MyView, ApplicationPresenter.MyProxy> {
 
 
-    interface MyView extends View {
-        void updateConnectionStatus(boolean online);
-    }
+    interface MyView extends View {}
 
     public static final NestedSlot SLOT_MAIN = new NestedSlot();
 
@@ -48,11 +45,5 @@ public class ApplicationPresenter
             MyView view,
             MyProxy proxy) {
         super(eventBus, view, proxy, RevealType.Root);
-        addRegisteredHandler(ConnectionStatusUpdatedEvent.TYPE, this);
-    }
-
-    @Override
-    public void onConnectionStatusUpdated(ConnectionStatusUpdatedEvent event) {
-        getView().updateConnectionStatus(event.isOnline());
     }
 }

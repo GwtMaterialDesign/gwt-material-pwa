@@ -91,9 +91,4 @@ public class ApplicationView extends ViewImpl implements ApplicationPresenter.My
     void onAdd(ClickEvent e) {
         MaterialToast.fireToast("I love GaMD");
     }
-
-    @Override
-    public void updateConnectionStatus(boolean online) {
-        btnAdd.setEnabled(online);
-    }
 }
