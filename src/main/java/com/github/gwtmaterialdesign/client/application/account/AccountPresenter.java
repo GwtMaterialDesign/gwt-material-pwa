@@ -17,57 +17,36 @@
  * limitations under the License.
  * #L%
  */
-package com.github.gwtmaterialdesign.client.application;
+package com.github.gwtmaterialdesign.client.application.account;
 
+import com.github.gwtmaterialdesign.client.application.ApplicationPresenter;
+import com.github.gwtmaterialdesign.client.application.HasNetworkStatus;
 import com.github.gwtmaterialdesign.client.events.NetworkStatusEvent;
-import com.github.gwtmaterialdesign.client.pwa.AppServiceWorkerManager;
+import com.github.gwtmaterialdesign.client.place.NameTokens;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
+import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyStandard;
-import com.gwtplatform.mvp.client.presenter.slots.NestedSlot;
-import com.gwtplatform.mvp.client.proxy.Proxy;
-import gwt.material.design.client.pwa.PwaManager;
+import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 
-public class ApplicationPresenter
-        extends Presenter<ApplicationPresenter.MyView, ApplicationPresenter.MyProxy> implements NetworkStatusEvent.NetworkStatusHandler {
-
+public class AccountPresenter extends Presenter<AccountPresenter.MyView, AccountPresenter.MyProxy> implements NetworkStatusEvent.NetworkStatusHandler {
 
     interface MyView extends View, HasNetworkStatus {}
 
-    public static final NestedSlot SLOT_MAIN = new NestedSlot();
-
     @ProxyStandard
-    interface MyProxy extends Proxy<ApplicationPresenter> {
+    @NameToken(NameTokens.ACCOUNT)
+    interface MyProxy extends ProxyPlace<AccountPresenter> {
     }
 
     @Inject
-    ApplicationPresenter(
+    AccountPresenter(
             EventBus eventBus,
             MyView view,
             MyProxy proxy) {
-        super(eventBus, view, proxy, RevealType.Root);
-
+        super(eventBus, view, proxy, ApplicationPresenter.SLOT_MAIN);
         addRegisteredHandler(NetworkStatusEvent.TYPE, this);
-    }
-
-    @Override
-    protected void onBind() {
-        super.onBind();
-
-        initPwa();
-    }
-
-    protected void initPwa() {
-        AppServiceWorkerManager serviceWorkerManager = new AppServiceWorkerManager("service-worker.js");
-        serviceWorkerManager.addConnectionStatusUpdateHandler(event -> NetworkStatusEvent.fire(this, event.isOnline()));
-
-        PwaManager.getInstance()
-                .setServiceWorker(serviceWorkerManager)
-                .setWebManifest("manifest.json")
-                .setThemeColor("#2196f3")
-                .load();
     }
 
     @Override

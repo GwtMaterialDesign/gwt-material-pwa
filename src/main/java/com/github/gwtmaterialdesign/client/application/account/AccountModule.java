@@ -17,9 +17,14 @@
  * limitations under the License.
  * #L%
  */
-package com.github.gwtmaterialdesign.client.place;
+package com.github.gwtmaterialdesign.client.application.account;
 
-public class NameTokens {
-    public static final String HOME = "/";
-    public static final String ACCOUNT = "account";
+import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
+
+public class AccountModule extends AbstractPresenterModule {
+    @Override
+    protected void configure() {
+        bindPresenter(AccountPresenter.class, AccountPresenter.MyView.class, AccountView.class,
+                AccountPresenter.MyProxy.class);
+    }
 }

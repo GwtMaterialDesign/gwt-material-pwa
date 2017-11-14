@@ -20,6 +20,8 @@
 package com.github.gwtmaterialdesign.client.application.home;
 
 import com.github.gwtmaterialdesign.client.application.ApplicationPresenter;
+import com.github.gwtmaterialdesign.client.application.HasNetworkStatus;
+import com.github.gwtmaterialdesign.client.events.NetworkStatusEvent;
 import com.github.gwtmaterialdesign.client.place.NameTokens;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -28,10 +30,11 @@ import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
+import gwt.material.design.client.ui.MaterialToast;
 
-public class HomePresenter extends Presenter<HomePresenter.MyView, HomePresenter.MyProxy> {
-    interface MyView extends View {
-    }
+public class HomePresenter extends Presenter<HomePresenter.MyView, HomePresenter.MyProxy> implements NetworkStatusEvent.NetworkStatusHandler {
+
+    interface MyView extends View, HasNetworkStatus {}
 
     @ProxyStandard
     @NameToken(NameTokens.HOME)
@@ -44,5 +47,11 @@ public class HomePresenter extends Presenter<HomePresenter.MyView, HomePresenter
             MyView view,
             MyProxy proxy) {
         super(eventBus, view, proxy, ApplicationPresenter.SLOT_MAIN);
+        addRegisteredHandler(NetworkStatusEvent.TYPE, this);
+    }
+
+    @Override
+    public void onNetworkStatus(NetworkStatusEvent event) {
+        getView().updateUi(event.isOnline());
     }
 }

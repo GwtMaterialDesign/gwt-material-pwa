@@ -17,56 +17,42 @@
  * limitations under the License.
  * #L%
  */
-package com.github.gwtmaterialdesign.client.application;
+package com.github.gwtmaterialdesign.client.application.account;
 
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewImpl;
-import gwt.material.design.client.constants.Color;
+import gwt.material.design.client.base.HasReadOnly;
 import gwt.material.design.client.ui.MaterialButton;
-import gwt.material.design.client.ui.MaterialContainer;
-import gwt.material.design.client.ui.MaterialNavBar;
-import gwt.material.design.client.ui.MaterialToast;
+import gwt.material.design.client.ui.MaterialRow;
 
 import javax.inject.Inject;
 
-public class ApplicationView extends ViewImpl implements ApplicationPresenter.MyView {
+public class AccountView extends ViewImpl implements AccountPresenter.MyView {
 
-    interface Binder extends UiBinder<Widget, ApplicationView> {
+    interface Binder extends UiBinder<Widget, AccountView> {
     }
 
     @UiField
-    MaterialContainer container;
-
-
+    MaterialRow fieldRow;
 
     @UiField
-    MaterialNavBar navBar;
+    MaterialButton save;
 
     @Inject
-    ApplicationView(
-            Binder uiBinder) {
+    AccountView(Binder uiBinder) {
         initWidget(uiBinder.createAndBindUi(this));
-        bindSlot(ApplicationPresenter.SLOT_MAIN, container);
-    }
-
-    @Override
-    protected void onAttach() {
-        super.onAttach();
-
-        Document.get().getElementById("splashscreen").removeFromParent();
     }
 
     @Override
     public void updateUi(boolean online) {
-        if (online) {
-            navBar.setBackgroundColor(Color.INDIGO);
-        } else {
-            navBar.setBackgroundColor(Color.GREY);
+        for (Widget w : fieldRow) {
+            if (w instanceof HasReadOnly) {
+                ((HasReadOnly) w).setReadOnly(!online);
+            }
         }
+
+        save.setEnabled(online  );
     }
 }
