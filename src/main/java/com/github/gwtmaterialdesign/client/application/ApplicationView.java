@@ -57,7 +57,7 @@ public class ApplicationView extends ViewImpl implements ApplicationPresenter.My
     ApplicationView(
             Binder uiBinder) {
         initWidget(uiBinder.createAndBindUi(this));
-        setInSlot(ApplicationPresenter.SLOT_MAIN, container);
+        bindSlot(ApplicationPresenter.SLOT_MAIN, container);
 
         AppServiceWorkerManager serviceWorkerManager = new AppServiceWorkerManager("service-worker.js");
         serviceWorkerManager.addConnectionStatusUpdateHandler(event -> {
@@ -89,6 +89,6 @@ public class ApplicationView extends ViewImpl implements ApplicationPresenter.My
 
     @UiHandler("btnAdd")
     void onAdd(ClickEvent e) {
-        MaterialToast.fireToast("I love GaMD");
+        MaterialToast.fireToast("I love GMD");
     }
 }
