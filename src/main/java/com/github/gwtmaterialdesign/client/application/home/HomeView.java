@@ -19,12 +19,14 @@
  */
 package com.github.gwtmaterialdesign.client.application.home;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewImpl;
+import gwt.material.design.client.pwa.manifest.js.AppInstaller;
 import gwt.material.design.client.ui.MaterialButton;
 import gwt.material.design.client.ui.MaterialCard;
 import gwt.material.design.client.ui.MaterialPanel;
@@ -46,9 +48,23 @@ public class HomeView extends ViewImpl implements HomePresenter.MyView {
     @UiField
     MaterialPanel onlinePanel;
 
+    @UiField
+    MaterialButton install;
+
+    private AppInstaller appInstaller;
+
     @Inject
     HomeView(Binder uiBinder) {
         initWidget(uiBinder.createAndBindUi(this));
+    }
+
+    @Override
+    protected void onAttach() {
+        super.onAttach();
+
+        appInstaller = new AppInstaller();
+
+
     }
 
     @Override
@@ -61,5 +77,14 @@ public class HomeView extends ViewImpl implements HomePresenter.MyView {
     @UiHandler("btnAdd")
     void onAdd(ClickEvent e) {
         MaterialToast.fireToast("I love GMD");
+    }
+
+    @UiHandler("install")
+    void onInstall(ClickEvent e) {
+        appInstaller.install(param1 -> {
+            MaterialToast.fireToast("Success");
+        }, param1 -> {
+            MaterialToast.fireToast(param1);
+        });
     }
 }

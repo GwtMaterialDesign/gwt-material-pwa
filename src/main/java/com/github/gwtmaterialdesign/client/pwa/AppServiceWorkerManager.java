@@ -7,4 +7,14 @@ public class AppServiceWorkerManager extends DefaultServiceWorkerManager {
     public AppServiceWorkerManager(String resource) {
         super(resource);
     }
+
+    @Override
+    protected void onOffline() {
+        super.onOffline();
+    }
+
+    @Override
+    protected void onOnline() {
+        super.onOnline();
+    }
 }

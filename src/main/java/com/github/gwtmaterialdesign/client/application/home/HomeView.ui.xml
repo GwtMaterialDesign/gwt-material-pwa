@@ -41,8 +41,9 @@
 
             <m:MaterialPanel ui:field="onlinePanel" textAlign="CENTER">
                 <m:MaterialIcon marginTop="120" textColor="BLUE_DARKEN_1" iconType="POLYMER" iconSize="LARGE"/>
-                <m:MaterialLabel text="GMD 2.1" textColor="BLUE" fontSize="2em"/>
+                <m:MaterialLabel text="GMD + PWA" textColor="BLUE" fontSize="2em"/>
                 <m:MaterialLabel text="Start building now your gwt-material apps." textColor="BLUE" fontSize="0.8em"/>
+                <m:MaterialButton text="Install App" ui:field="install" iconType="FILE_DOWNLOAD" backgroundColor="BLUE" marginTop="20"/>
             </m:MaterialPanel>
         </m:MaterialColumn>
 

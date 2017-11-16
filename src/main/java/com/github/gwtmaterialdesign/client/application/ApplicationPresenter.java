@@ -60,11 +60,8 @@ public class ApplicationPresenter
     }
 
     protected void initPwa() {
-        AppServiceWorkerManager serviceWorkerManager = new AppServiceWorkerManager("service-worker.js");
-        serviceWorkerManager.addConnectionStatusUpdateHandler(event -> NetworkStatusEvent.fire(this, event.isOnline()));
-
         PwaManager.getInstance()
-                .setServiceWorker(serviceWorkerManager)
+                .setServiceWorker(new AppServiceWorkerManager("service-worker.js"))
                 .setWebManifest("manifest.json")
                 .setThemeColor("#2196f3")
                 .load();
