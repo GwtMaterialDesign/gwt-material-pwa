@@ -25,12 +25,8 @@
 
     <m:MaterialPanel>
         <m:MaterialHeader>
-            <m:MaterialNavBar ui:field="navBar" activates="sidenav" backgroundColor="INDIGO">
+            <m:MaterialNavBar ui:field="navBar" activates="sidenav" backgroundColor="BLUE">
                 <m:MaterialNavBrand fontSize="1.2em" text="gwt-material-pwa" />
-                <m:MaterialNavSection float="RIGHT" hideOn="NONE">
-                    <m:MaterialLink text="Link 1"/>
-                    <m:MaterialLink iconType="POLYMER" />
-                </m:MaterialNavSection>
             </m:MaterialNavBar>
         </m:MaterialHeader>
 

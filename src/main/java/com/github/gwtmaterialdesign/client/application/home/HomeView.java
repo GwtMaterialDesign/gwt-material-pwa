@@ -26,6 +26,8 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewImpl;
+import gwt.material.design.addins.client.cutout.MaterialCutOut;
+import gwt.material.design.addins.client.overlay.MaterialOverlay;
 import gwt.material.design.client.pwa.manifest.js.AppInstaller;
 import gwt.material.design.client.ui.MaterialButton;
 import gwt.material.design.client.ui.MaterialCard;
@@ -51,6 +53,9 @@ public class HomeView extends ViewImpl implements HomePresenter.MyView {
     @UiField
     MaterialButton install;
 
+    @UiField
+    MaterialOverlay overlay;
+
     private AppInstaller appInstaller;
 
     @Inject
@@ -62,9 +67,7 @@ public class HomeView extends ViewImpl implements HomePresenter.MyView {
     protected void onAttach() {
         super.onAttach();
 
-        appInstaller = new AppInstaller();
-
-
+        appInstaller = new AppInstaller(() -> overlay.open());
     }
 
     @Override
@@ -81,10 +84,11 @@ public class HomeView extends ViewImpl implements HomePresenter.MyView {
 
     @UiHandler("install")
     void onInstall(ClickEvent e) {
-        appInstaller.install(param1 -> {
-            MaterialToast.fireToast("Success");
-        }, param1 -> {
-            MaterialToast.fireToast(param1);
-        });
+        appInstaller.prompt();
+    }
+
+    @UiHandler("gotIt")
+    void onGotIt(ClickEvent e) {
+        overlay.close();
     }
 }

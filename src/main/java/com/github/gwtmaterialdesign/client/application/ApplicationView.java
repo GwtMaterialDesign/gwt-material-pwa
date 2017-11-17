@@ -57,7 +57,7 @@ public class ApplicationView extends ViewImpl implements ApplicationPresenter.My
     @Override
     public void updateUi(boolean online) {
         if (online) {
-            navBar.setBackgroundColor(Color.INDIGO);
+            navBar.setBackgroundColor(Color.BLUE);
         } else {
             navBar.setBackgroundColor(Color.GREY);
         }

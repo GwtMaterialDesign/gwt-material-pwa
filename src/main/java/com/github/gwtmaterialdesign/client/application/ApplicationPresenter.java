@@ -61,7 +61,7 @@ public class ApplicationPresenter
 
     protected void initPwa() {
         PwaManager.getInstance()
-                .setServiceWorker(new AppServiceWorkerManager("service-worker.js"))
+                .setServiceWorker(new AppServiceWorkerManager("service-worker.js", getEventBus()))
                 .setWebManifest("manifest.json")
                 .setThemeColor("#2196f3")
                 .load();
