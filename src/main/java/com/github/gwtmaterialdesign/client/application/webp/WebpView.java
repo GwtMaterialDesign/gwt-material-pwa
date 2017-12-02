@@ -17,42 +17,31 @@
  * limitations under the License.
  * #L%
  */
-package com.github.gwtmaterialdesign.client.application;
+package com.github.gwtmaterialdesign.client.application.webp;
 
 import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewImpl;
-import gwt.material.design.client.constants.Color;
-import gwt.material.design.client.ui.MaterialContainer;
-import gwt.material.design.client.ui.MaterialNavBar;
 
 import javax.inject.Inject;
 
-public class ApplicationView extends ViewImpl implements ApplicationPresenter.MyView {
+public class WebpView extends ViewImpl implements WebpPresenter.MyView {
 
-    interface Binder extends UiBinder<Widget, ApplicationView> {
+    interface Binder extends UiBinder<Widget, WebpView> {
     }
 
-    @UiField
-    MaterialContainer container;
-
-    @UiField
-    MaterialNavBar navBar;
-
     @Inject
-    ApplicationView(
-            Binder uiBinder) {
+    WebpView(Binder uiBinder) {
         initWidget(uiBinder.createAndBindUi(this));
-        bindSlot(ApplicationPresenter.SLOT_MAIN, container);
+    }
+
+    @Override
+    protected void onAttach() {
+        super.onAttach();
     }
 
     @Override
     public void updateUi(boolean online) {
-        if (online) {
-            navBar.setBackgroundColor(Color.BLUE);
-        } else {
-            navBar.setBackgroundColor(Color.GREY);
-        }
+
     }
 }

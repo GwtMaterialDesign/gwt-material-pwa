@@ -20,7 +20,8 @@
 package com.github.gwtmaterialdesign.client.application;
 
 import com.github.gwtmaterialdesign.client.events.NetworkStatusEvent;
-import com.github.gwtmaterialdesign.client.pwa.AppServiceWorkerManager;
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.Presenter;
@@ -42,6 +43,8 @@ public class ApplicationPresenter
     interface MyProxy extends Proxy<ApplicationPresenter> {
     }
 
+    public AppServiceWorkerManager serviceWorkerManager;
+
     @Inject
     ApplicationPresenter(
             EventBus eventBus,
@@ -56,12 +59,22 @@ public class ApplicationPresenter
     protected void onBind() {
         super.onBind();
 
+        removeSplashScreen();
         initPwa();
     }
 
+    public void removeSplashScreen() {
+        Element splashElement = Document.get().getElementById("splashscreen");
+        if (splashElement != null) {
+            splashElement.removeFromParent();
+        }
+    }
+
     protected void initPwa() {
+        serviceWorkerManager = new AppServiceWorkerManager("service-worker.js", getEventBus());
+
         PwaManager.getInstance()
-                .setServiceWorker(new AppServiceWorkerManager("service-worker.js", getEventBus()))
+                .setServiceWorker(serviceWorkerManager)
                 .setWebManifest("manifest.json")
                 .setThemeColor("#2196f3")
                 .load();
@@ -70,5 +83,9 @@ public class ApplicationPresenter
     @Override
     public void onNetworkStatus(NetworkStatusEvent event) {
         getView().updateUi(event.isOnline());
+    }
+
+    public AppServiceWorkerManager getServiceWorkerManager() {
+        return serviceWorkerManager;
     }
 }

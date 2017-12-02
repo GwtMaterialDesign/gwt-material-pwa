@@ -34,15 +34,10 @@
     <source path='shared'/>
 
     <!--GWT Material-->
-    <inherits name="gwt.material.design.GwtMaterialWithJQuery"/>
+    <inherits name="gwt.material.design.GwtMaterialWithJQueryDebug"/>
     <inherits name="gwt.material.design.themes.ThemeBlue"/>
-    <inherits name="gwt.material.design.addins.GwtMaterialAddins"/>
-    <inherits name="gwt.material.design.GwtMaterialTable"/>
+    <inherits name="gwt.material.design.addins.GwtMaterialAddinsDebug"/>
+    <inherits name="gwt.material.design.GwtMaterialTableDebug"/>
 
     <set-configuration-property name="CssResource.enableGss" value="true"/>
-
-    <!-- Comment it if you want permutations per property.
-         It increases compilation time -->
-    <collapse-all-properties value="true" />
-
 </module>

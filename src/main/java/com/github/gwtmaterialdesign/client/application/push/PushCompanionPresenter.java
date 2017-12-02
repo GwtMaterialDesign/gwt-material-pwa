@@ -17,14 +17,15 @@
  * limitations under the License.
  * #L%
  */
-package com.github.gwtmaterialdesign.client.application.home;
+package com.github.gwtmaterialdesign.client.application.push;
 
-import com.github.gwtmaterialdesign.client.application.AppServiceWorkerManager;
 import com.github.gwtmaterialdesign.client.application.ApplicationPresenter;
-import com.github.gwtmaterialdesign.client.application.HasNetworkStatus;
-import com.github.gwtmaterialdesign.client.events.NetworkStatusEvent;
 import com.github.gwtmaterialdesign.client.place.NameTokens;
+import com.github.gwtmaterialdesign.shared.NotificationDTO;
+import com.github.gwtmaterialdesign.shared.RpcService;
+import com.github.gwtmaterialdesign.shared.RpcServiceAsync;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.HasUiHandlers;
@@ -33,46 +34,42 @@ import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
-import gwt.material.design.client.pwa.PwaManager;
+import gwt.material.design.client.ui.MaterialToast;
 
-public class HomePresenter extends Presenter<HomePresenter.MyView, HomePresenter.MyProxy>
-        implements NetworkStatusEvent.NetworkStatusHandler, HomeUiHandlers {
+public class PushCompanionPresenter extends Presenter<PushCompanionPresenter.MyView, PushCompanionPresenter.MyProxy>
+        implements PushCompanionUiHandlers {
 
-    interface MyView extends View, HasNetworkStatus, HasUiHandlers<HomeUiHandlers> {}
 
-    PwaManager manager = PwaManager.getInstance();
+    private RpcServiceAsync service = GWT.create(RpcService.class);
+
+    interface MyView extends View, HasUiHandlers<PushCompanionUiHandlers> {}
 
     @ProxyStandard
-    @NameToken(NameTokens.HOME)
-    interface MyProxy extends ProxyPlace<HomePresenter> {
+    @NameToken(NameTokens.PUSH_COMPANION)
+    interface MyProxy extends ProxyPlace<PushCompanionPresenter> {
     }
 
     @Inject
-    HomePresenter(
+    PushCompanionPresenter(
             EventBus eventBus,
             MyView view,
             MyProxy proxy) {
         super(eventBus, view, proxy, ApplicationPresenter.SLOT_MAIN);
-        addRegisteredHandler(NetworkStatusEvent.TYPE, this);
         getView().setUiHandlers(this);
     }
 
     @Override
-    protected void onBind() {
-        super.onBind();
-    }
+    public void push(NotificationDTO notification) {
+        service.notifyAllUser(notification, new AsyncCallback<Void>() {
+            @Override
+            public void onFailure(Throwable throwable) {
+                MaterialToast.fireToast(throwable.getMessage());
+            }
 
-    @Override
-    public void onNetworkStatus(NetworkStatusEvent event) {
-        getView().updateUi(event.isOnline());
-    }
-
-    @Override
-    public AppServiceWorkerManager getServiceWorkerManager() {
-        if (manager.getServiceWorkerManager() instanceof AppServiceWorkerManager) {
-            return (AppServiceWorkerManager) manager.getServiceWorkerManager();
-        }
-        GWT.log("Push Notification Manager is not yet registered");
-        return null;
+            @Override
+            public void onSuccess(Void aVoid) {
+                MaterialToast.fireToast("Successfully notify all the users.");
+            }
+        });
     }
 }

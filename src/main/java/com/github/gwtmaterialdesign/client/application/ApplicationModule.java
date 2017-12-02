@@ -21,6 +21,8 @@ package com.github.gwtmaterialdesign.client.application;
 
 import com.github.gwtmaterialdesign.client.application.account.AccountModule;
 import com.github.gwtmaterialdesign.client.application.home.HomeModule;
+import com.github.gwtmaterialdesign.client.application.push.PushCompanionModule;
+import com.github.gwtmaterialdesign.client.application.webp.WebpModule;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 
 public class
@@ -28,7 +30,9 @@ ApplicationModule extends AbstractPresenterModule {
     @Override
     protected void configure() {
         install(new HomeModule());
+        install(new WebpModule());
         install(new AccountModule());
+        install(new PushCompanionModule());
 
         bindPresenter(ApplicationPresenter.class, ApplicationPresenter.MyView.class, ApplicationView.class,
                 ApplicationPresenter.MyProxy.class);
