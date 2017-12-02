@@ -17,62 +17,40 @@
  * limitations under the License.
  * #L%
  */
-package com.github.gwtmaterialdesign.client.application.home;
+package com.github.gwtmaterialdesign.client.application.webp;
 
-import com.github.gwtmaterialdesign.client.application.AppServiceWorkerManager;
 import com.github.gwtmaterialdesign.client.application.ApplicationPresenter;
 import com.github.gwtmaterialdesign.client.application.HasNetworkStatus;
 import com.github.gwtmaterialdesign.client.events.NetworkStatusEvent;
 import com.github.gwtmaterialdesign.client.place.NameTokens;
-import com.google.gwt.core.client.GWT;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
-import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
-import gwt.material.design.client.pwa.PwaManager;
 
-public class HomePresenter extends Presenter<HomePresenter.MyView, HomePresenter.MyProxy>
-        implements NetworkStatusEvent.NetworkStatusHandler, HomeUiHandlers {
+public class WebpPresenter extends Presenter<WebpPresenter.MyView, WebpPresenter.MyProxy> implements NetworkStatusEvent.NetworkStatusHandler {
 
-    interface MyView extends View, HasNetworkStatus, HasUiHandlers<HomeUiHandlers> {}
-
-    PwaManager manager = PwaManager.getInstance();
+    interface MyView extends View, HasNetworkStatus {}
 
     @ProxyStandard
-    @NameToken(NameTokens.HOME)
-    interface MyProxy extends ProxyPlace<HomePresenter> {
+    @NameToken(NameTokens.WEBP)
+    interface MyProxy extends ProxyPlace<WebpPresenter> {
     }
 
     @Inject
-    HomePresenter(
+    WebpPresenter(
             EventBus eventBus,
             MyView view,
             MyProxy proxy) {
         super(eventBus, view, proxy, ApplicationPresenter.SLOT_MAIN);
         addRegisteredHandler(NetworkStatusEvent.TYPE, this);
-        getView().setUiHandlers(this);
-    }
-
-    @Override
-    protected void onBind() {
-        super.onBind();
     }
 
     @Override
     public void onNetworkStatus(NetworkStatusEvent event) {
         getView().updateUi(event.isOnline());
-    }
-
-    @Override
-    public AppServiceWorkerManager getServiceWorkerManager() {
-        if (manager.getServiceWorkerManager() instanceof AppServiceWorkerManager) {
-            return (AppServiceWorkerManager) manager.getServiceWorkerManager();
-        }
-        GWT.log("Push Notification Manager is not yet registered");
-        return null;
     }
 }

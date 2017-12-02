@@ -33,6 +33,8 @@
         <m:MaterialSideNavPush m:id="sidenav" width="280">
             <m:MaterialLink text="Home" iconType="HOME" href="#home"/>
             <m:MaterialLink text="Account" iconType="ACCOUNT_CIRCLE" href="#account"/>
+            <m:MaterialLink text="Webp" iconType="IMAGE" href="#webp"/>
+            <m:MaterialLink text="Push Notification" iconType="SECURITY" href="#push_companion"/>
         </m:MaterialSideNavPush>
 
         <m:MaterialContainer ui:field="container" />

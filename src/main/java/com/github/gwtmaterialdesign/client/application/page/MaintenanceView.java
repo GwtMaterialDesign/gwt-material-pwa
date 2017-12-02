@@ -17,42 +17,34 @@
  * limitations under the License.
  * #L%
  */
-package com.github.gwtmaterialdesign.client.application;
+package com.github.gwtmaterialdesign.client.application.page;
 
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Widget;
-import com.gwtplatform.mvp.client.ViewImpl;
-import gwt.material.design.client.constants.Color;
-import gwt.material.design.client.ui.MaterialContainer;
-import gwt.material.design.client.ui.MaterialNavBar;
+import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 import javax.inject.Inject;
 
-public class ApplicationView extends ViewImpl implements ApplicationPresenter.MyView {
+public class MaintenanceView extends ViewWithUiHandlers<MaintenanceUiHandler> implements MaintenancePresenter.MyView {
 
-    interface Binder extends UiBinder<Widget, ApplicationView> {
+    interface Binder extends UiBinder<Widget, MaintenanceView> {
     }
 
-    @UiField
-    MaterialContainer container;
-
-    @UiField
-    MaterialNavBar navBar;
 
     @Inject
-    ApplicationView(
-            Binder uiBinder) {
+    MaintenanceView(Binder uiBinder) {
         initWidget(uiBinder.createAndBindUi(this));
-        bindSlot(ApplicationPresenter.SLOT_MAIN, container);
     }
 
     @Override
     public void updateUi(boolean online) {
-        if (online) {
-            navBar.setBackgroundColor(Color.BLUE);
-        } else {
-            navBar.setBackgroundColor(Color.GREY);
-        }
+
+    }
+
+    @UiHandler("reconnect")
+    void reconnectToServer(ClickEvent e) {
+        getUiHandlers().reconnectServer();
     }
 }

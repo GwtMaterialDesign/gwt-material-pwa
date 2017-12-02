@@ -17,19 +17,14 @@
  * limitations under the License.
  * #L%
  */
-package com.github.gwtmaterialdesign.client.place;
+package com.github.gwtmaterialdesign.client.application.webp;
 
-import org.junit.Test;
+import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 
-import static org.junit.Assert.assertEquals;
-
-/**
- * @author Randy May
- *         Date: 2016-04-11
- */
-public class NameTokensTest {
-    @Test
-    public void testHomeToken() {
-        assertEquals("home", NameTokens.HOME);
+public class WebpModule extends AbstractPresenterModule {
+    @Override
+    protected void configure() {
+        bindPresenter(WebpPresenter.class, WebpPresenter.MyView.class, WebpView.class,
+                WebpPresenter.MyProxy.class);
     }
 }

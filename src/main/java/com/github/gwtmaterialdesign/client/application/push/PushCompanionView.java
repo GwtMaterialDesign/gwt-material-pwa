@@ -17,42 +17,38 @@
  * limitations under the License.
  * #L%
  */
-package com.github.gwtmaterialdesign.client.application;
+package com.github.gwtmaterialdesign.client.application.push;
 
+import com.github.gwtmaterialdesign.shared.NotificationDTO;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Widget;
-import com.gwtplatform.mvp.client.ViewImpl;
-import gwt.material.design.client.constants.Color;
-import gwt.material.design.client.ui.MaterialContainer;
-import gwt.material.design.client.ui.MaterialNavBar;
+import com.gwtplatform.mvp.client.ViewWithUiHandlers;
+import gwt.material.design.client.ui.MaterialTextArea;
+import gwt.material.design.client.ui.MaterialTextBox;
 
 import javax.inject.Inject;
 
-public class ApplicationView extends ViewImpl implements ApplicationPresenter.MyView {
+public class PushCompanionView extends ViewWithUiHandlers<PushCompanionUiHandlers> implements PushCompanionPresenter.MyView {
 
-    interface Binder extends UiBinder<Widget, ApplicationView> {
+    interface Binder extends UiBinder<Widget, PushCompanionView> {
     }
 
     @UiField
-    MaterialContainer container;
+    MaterialTextBox title, image;
 
     @UiField
-    MaterialNavBar navBar;
+    MaterialTextArea description;
 
     @Inject
-    ApplicationView(
-            Binder uiBinder) {
+    PushCompanionView(Binder uiBinder) {
         initWidget(uiBinder.createAndBindUi(this));
-        bindSlot(ApplicationPresenter.SLOT_MAIN, container);
     }
 
-    @Override
-    public void updateUi(boolean online) {
-        if (online) {
-            navBar.setBackgroundColor(Color.BLUE);
-        } else {
-            navBar.setBackgroundColor(Color.GREY);
-        }
+    @UiHandler("notifyAllUser")
+    void notifyAllUser(ClickEvent e) {
+        getUiHandlers().push(new NotificationDTO(title.getValue(), description.getValue(), image.getValue()));
     }
 }

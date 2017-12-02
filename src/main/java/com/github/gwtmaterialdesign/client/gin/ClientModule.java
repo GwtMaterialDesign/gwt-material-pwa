@@ -20,6 +20,7 @@
 package com.github.gwtmaterialdesign.client.gin;
 
 import com.github.gwtmaterialdesign.client.application.ApplicationModule;
+import com.github.gwtmaterialdesign.client.application.page.MaintenanceModule;
 import com.github.gwtmaterialdesign.client.place.NameTokens;
 import com.github.gwtmaterialdesign.client.resources.ResourceLoader;
 import com.gwtplatform.mvp.client.annotations.DefaultPlace;
@@ -33,6 +34,7 @@ public class ClientModule extends AbstractPresenterModule {
     protected void configure() {
         install(new DefaultModule.Builder().build());
         install(new ApplicationModule());
+        install(new MaintenanceModule());
 
         bind(ResourceLoader.class).asEagerSingleton();
 

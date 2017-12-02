@@ -20,6 +20,9 @@
 package com.github.gwtmaterialdesign.client.place;
 
 public class NameTokens {
-    public static final String HOME = "/";
+    public static final String HOME = "home";
     public static final String ACCOUNT = "account";
+    public static final String WEBP = "webp";
+    public static final String PUSH_COMPANION = "push_companion";
+    public static final String MAINTENANCE = "maintenance";
 }

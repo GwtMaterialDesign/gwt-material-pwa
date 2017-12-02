@@ -41,11 +41,16 @@
             </m:MaterialCard>
 
             <m:MaterialPanel ui:field="onlinePanel" textAlign="CENTER">
-                <m:MaterialIcon marginTop="120" textColor="BLUE_DARKEN_1" iconType="POLYMER" iconSize="LARGE"/>
+                <m:MaterialIcon marginTop="40" textColor="BLUE_DARKEN_1" iconType="POLYMER" iconSize="LARGE"/>
                 <m:MaterialLabel text="GMD + PWA" textColor="BLUE" fontSize="2em"/>
                 <m:MaterialLabel text="Start building now your gwt-material apps." textColor="BLUE" fontSize="0.8em"/>
                 <m:MaterialButton text="Install App" waves="DEFAULT" ui:field="install" iconType="FILE_DOWNLOAD" backgroundColor="BLUE" marginTop="20"/>
             </m:MaterialPanel>
+
+            <m:MaterialRow textAlign="CENTER" marginTop="40" borderTop="1px solid #e9e9e9" paddingTop="20">
+                <m:MaterialLabel text="Enable Push Notication" />
+                <m:MaterialSwitch ui:field="enablePushNotification" onLabel="Enable" offLabel="Disable"/>
+            </m:MaterialRow>
         </m:MaterialColumn>
 
         <ma:overlay.MaterialOverlay ui:field="overlay" textColor="WHITE" backgroundColor="BLUE">
